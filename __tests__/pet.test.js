@@ -1,53 +1,76 @@
 const Pet = require('../src/pet');
 
-describe('constructor', () => {
-	it('returns an object', () => {
-		expect(new Pet('Fido')).toBeInstanceOf(Object);
+describe('Constuctor', () => {
+	test('check new instance returns object', () => {
+		expect(new Pet()).toBeInstanceOf(Object);
 	});
 });
 
-describe('name property', () => {
-	it('returns the objects name property', () => {
-		const pet = new Pet('Fido');
-		expect(pet.name).toBe('Fido');
+describe('Naming Pets', () => {
+	test('check name of instance returns Fido', () => {
+		expect(new Pet('Fido').name).toBe('Fido');
 	});
 });
 
-describe('grow up', () => {
-	it('increases age by 1', () => {
-		const pet = new Pet('Fido');
+describe('Getting Older', () => {
+	const pet = new Pet('Fido');
+	test('check age of instance increases by 1', () => {
 		pet.growUp();
 		expect(pet.age).toBe(1);
+	});
+	test('check age of instance increases to 2', () => {
+		pet.growUp();
+		expect(pet.age).toBe(2);
+	});
+});
+
+describe('Getting older and unhealthier', () => {
+	const pet = new Pet('Fido');
+	test('check when growUp() hunger increases by 5', () => {
+		pet.growUp();
 		expect(pet.hunger).toBe(5);
+	});
+	test('check when growUp() fitness increase by 3', () => {
+		expect(pet.fitness).toBe(13);
+	});
+});
+
+describe('Keeping fit', () => {
+	const pet = new Pet('Fido');
+	test('check when walk() fitness increases by 4, with max 10', () => {
+		pet.walk();
 		expect(pet.fitness).toBe(10);
 	});
 });
 
-describe('walk', () => {
-	it('increase the pets fitness by 4 but not over 10', () => {
-		const pet = new Pet('Fido');
-		pet.fitness = 0;
-		pet.walk();
-		expect(pet.fitness).toBe(4);
+describe('Keeping fed', () => {
+	const pet = new Pet('Fido');
+	test('check when feed() hunger decreases by 3, with min 0', () => {
+		pet.feed();
+		expect(pet.hunger).toBe(0);
+		pet.feed();
+		expect(pet.hunger).toBe(0);
 	});
 });
 
-describe('feed', () => {
+describe('Check up', () => {
 	const pet = new Pet('Fido');
-	pet.growUp();
-	pet.feed();
-	it('feed to reduce hunger by 3', () => {
-		expect(pet.hunger).toBe(2);
+	test('check new instance is feeling great', () => {
+		// on initialisation fitess is 10, and hunger is 0
+		expect(pet.checkUp()).toBe('I feel great!');
 	});
-});
-
-describe('check up', () => {
-	const pet = new Pet('Fido');
-	it('check fitness and hunger', () => {
-		expect(pet.checkUp()).toBe('I feel great');
+	test('check needs walk', () => {
+		pet.fitness = 3;
+		expect(pet.checkUp()).toBe('I need a walk');
 	});
-	// pet.fitness = 3;
-	// it('check fitness', () => {
-	// 	expect(pet.checkUp()).toBe('I need a walk');
-	// });
+	test('check needs feeding', () => {
+		pet.fitness = 10;
+		pet.hunger = 5;
+		expect(pet.checkUp()).toBe('I am hungry');
+	});
+	test('check needs both walking and feeding', () => {
+		pet.fitness = 2;
+		pet.hunger = 6;
+		expect(pet.checkUp()).toBe('I need walking and feeding');
+	});
 });

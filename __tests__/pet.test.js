@@ -6,9 +6,19 @@ describe('Constuctor', () => {
 	});
 });
 
+// describe('Naming Pets', () => {
+// 	test('check name of instance returns Fido', () => {
+// 		expect(new Pet('Fido').name).toBe('Fido');
+// 	});
+// });
 describe('Naming Pets', () => {
+	const pet = new Pet('Fido');
 	test('check name of instance returns Fido', () => {
-		expect(new Pet('Fido').name).toBe('Fido');
+		expect(pet.getName()).toBe('Fido');
+	});
+	test('check can change name', () => {
+		pet.setName('Leonardo');
+		expect(pet.getName()).toBe('Leonardo');
 	});
 });
 
@@ -17,10 +27,14 @@ describe('Getting Older', () => {
 	test('check age of instance increases by 1', () => {
 		pet.growUp();
 		expect(pet.age).toBe(1);
+		expect(pet.hunger).toBe(5);
+		expect(pet.fitness).toBe(13);
 	});
 	test('check age of instance increases to 2', () => {
 		pet.growUp();
 		expect(pet.age).toBe(2);
+		expect(pet.hunger).toBe(10);
+		expect(pet.fitness).toBe(16);
 	});
 });
 
@@ -72,5 +86,43 @@ describe('Check up', () => {
 		pet.fitness = 2;
 		pet.hunger = 6;
 		expect(pet.checkUp()).toBe('I need walking and feeding');
+	});
+});
+
+describe('Death ☠️', () => {
+	const pet = new Pet('Fido');
+	test('check alive when born', () => {
+		expect(pet.isAlive).toBe(true);
+	});
+	test('check death at 30', () => {
+		pet.age = 30;
+		expect(pet.isAlive).toBe(false);
+	});
+	test('check death when hunger reaches 10', () => {
+		pet.age = 0;
+		pet.hunger = 10;
+		expect(pet.isAlive).toBe(false);
+	});
+	test('check death with fitness reaches 0', () => {
+		pet.age = 0;
+		pet.hunger = 0;
+		pet.fitness = 0;
+		expect(pet.isAlive).toBe(false);
+	});
+});
+
+describe('Guard Clauses', () => {
+	const pet = new Pet('Fido');
+	test('check checkUp() alive', () => {
+		expect(pet.checkUp()).toBe('I feel great!');
+	});
+	test('check checkUp() dead', () => {
+		pet.fitness = 0;
+		expect(pet.checkUp()).toBe('Your pet is no longer alive :(');
+	});
+	test('check functions throw error when dead', () => {
+		expect(() => pet.growUp()).toThrow('Your pet is no longer alive :(');
+		expect(() => pet.walk()).toThrow('Your pet is no longer alive :(');
+		expect(() => pet.feed()).toThrow('Your pet is no longer alive :(');
 	});
 });

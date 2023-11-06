@@ -130,11 +130,20 @@ describe('Making Babies', () => {
 	parentPet.adoptChild(childPet);
 	parentPet.adoptChild(siblingPet);
 	siblingPet.adoptChild(grandChildPet);
-	test('check child is born', () => {
+	test('check child is adopted', () => {
 		expect(parentPet.children[0]).toBe(childPet);
 		expect(parentPet.children[0].getName()).toBe('Junior');
 		expect(parentPet.children[1].getName()).toBe('Lil Sis');
 		expect(parentPet.children[1].children[0].getName()).toBe('Lil Junior');
 		expect(siblingPet.children[0].getName()).toBe('Lil Junior');
+	});
+	test('check adoption', () => {
+		parentPet.adoptChild({ name: 'Dave', species: 'Human' });
+		expect(parentPet.children[2].name).toBe('Dave');
+	});
+	test('check baby is made', () => {
+		parentPet.haveBaby('Cutie Pie');
+		expect(parentPet.babies[0].getName()).toBe('Cutie Pie');
+		expect(parentPet.babies[0]).toBeInstanceOf(Pet);
 	});
 });

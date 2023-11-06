@@ -8,6 +8,7 @@ const Pet = function (name) {
 	this.hunger = 0;
 	this.fitness = 10;
 	this.children = [];
+	this.babies = [];
 
 	this.setName = function (newName) {
 		_name = newName;
@@ -53,6 +54,10 @@ Pet.prototype.checkUp = function () {
 
 Pet.prototype.adoptChild = function (childPet) {
 	this.children.push(childPet);
+};
+
+Pet.prototype.haveBaby = function (babyName) {
+	this.babies.push(new Pet(babyName));
 };
 
 module.exports = Pet;

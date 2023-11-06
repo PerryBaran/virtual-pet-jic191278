@@ -2,15 +2,12 @@ const MAX_FITNESS = 10;
 const MIN_HUNGER = 0;
 
 const Pet = function (name) {
-	// this.name = name;
+	let _name = name;
+
 	this.age = 0;
 	this.hunger = 0;
 	this.fitness = 10;
-
-	let _name = name;
-	// let _age = 0;
-	// let _hunger = 0;
-	// let _fitness = 10;
+	this.children = [];
 
 	this.setName = function (newName) {
 		_name = newName;
@@ -52,6 +49,10 @@ Pet.prototype.checkUp = function () {
 	if (this.fitness <= 3) return 'I need a walk';
 	if (this.hunger >= 5) return 'I am hungry';
 	return 'I feel great!';
+};
+
+Pet.prototype.adoptChild = function (childPet) {
+	this.children.push(childPet);
 };
 
 module.exports = Pet;

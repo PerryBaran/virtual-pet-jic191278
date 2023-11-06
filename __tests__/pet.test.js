@@ -6,11 +6,6 @@ describe('Constuctor', () => {
 	});
 });
 
-// describe('Naming Pets', () => {
-// 	test('check name of instance returns Fido', () => {
-// 		expect(new Pet('Fido').name).toBe('Fido');
-// 	});
-// });
 describe('Naming Pets', () => {
 	const pet = new Pet('Fido');
 	test('check name of instance returns Fido', () => {
@@ -124,5 +119,22 @@ describe('Guard Clauses', () => {
 		expect(() => pet.growUp()).toThrow('Your pet is no longer alive :(');
 		expect(() => pet.walk()).toThrow('Your pet is no longer alive :(');
 		expect(() => pet.feed()).toThrow('Your pet is no longer alive :(');
+	});
+});
+
+describe('Making Babies', () => {
+	const parentPet = new Pet('Big Daddy');
+	const childPet = new Pet('Junior');
+	const siblingPet = new Pet('Lil Sis');
+	const grandChildPet = new Pet('Lil Junior');
+	parentPet.adoptChild(childPet);
+	parentPet.adoptChild(siblingPet);
+	siblingPet.adoptChild(grandChildPet);
+	test('check child is born', () => {
+		expect(parentPet.children[0]).toBe(childPet);
+		expect(parentPet.children[0].getName()).toBe('Junior');
+		expect(parentPet.children[1].getName()).toBe('Lil Sis');
+		expect(parentPet.children[1].children[0].getName()).toBe('Lil Junior');
+		expect(siblingPet.children[0].getName()).toBe('Lil Junior');
 	});
 });
